@@ -1,8 +1,7 @@
 const sidenav = document.querySelector('.sidenav')
-// const mainBody = document.querySelector('.main')
+const buttonOptions = document.querySelector('.buttons')
 const quizContent = document.querySelector('#quiz')
-// const submitButton = document.querySelector('#submit')
-// submitButton.addEventListener('click', () => showResults())
+let currentSlide
 
 async function fetchList() {
     let response = await fetch('http://localhost:3000/lists')
@@ -19,11 +18,28 @@ const buildNav = (list) => {
 }
 
 const generateQuiz = (list) => {
-    generateTimer()
-    let form = document.createElement('form')
+    buttonOptions.innerHTML = ''
+    // setting timer
+    quizContent.innerHTML = `
+    <h3>Seconds remaining: <span id='timer'>90</span></h3>`
+    let count = 89
+    let interval = setInterval(() => {
+        document.getElementById('timer').textContent = count
+        count--;
+        if (count === 0){
+            clearInterval(interval)
+            showResults(correctAnswers)
+        }
+    }, 1000)
+
     let correctAnswers = []
     let questionNumber = 1
+    currentSlide = 0
     list['questions'].forEach(question => {
+        // slide div
+        let slideDiv = document.createElement('div')
+        slideDiv.className = 'slide'
+
         // question
         let questionDiv = document.createElement('div')
         questionDiv.className = `question-${questionNumber}`
@@ -43,19 +59,35 @@ const generateQuiz = (list) => {
         })
         answerOptions.sort(() => Math.random() - 0.5)
         answerOptions.forEach(answer => answersDiv.appendChild(answer))
-        questionDiv.appendChild(answersDiv)
-        form.appendChild(questionDiv)
+        slideDiv.append(questionDiv, answersDiv)
+        quizContent.appendChild(slideDiv)
 
         questionNumber++
     })
+    // previous button
+    let previousButton = document.createElement('button')
+    previousButton.textContent = "Previous Question"
+    previousButton.id = 'previous'
+    previousButton.addEventListener('click', () => previousSlide())
+
+    // next button
+    let nextButton = document.createElement('button')
+    nextButton.textContent = "Next Question"
+    nextButton.id = 'next'
+    nextButton.addEventListener('click', () => nextSlide())
+
+    // submit button
     let submitButton = document.createElement('button')
-    submitButton.textContent = "Submit"
-    submitButton.addEventListener('click', () => showResults(correctAnswers))
+    submitButton.textContent = "Submit Quiz"
+    submitButton.id = 'submit'
+    submitButton.addEventListener('click', () => {
+        clearInterval(interval)
+        showResults(correctAnswers)
+    })
 
-    // form.addEventListener('submit', (e) => showResults(e, correctAnswers))
-    form.appendChild(submitButton)
+    buttonOptions.append(previousButton, nextButton, submitButton)
 
-    quizContent.appendChild(form)
+    showSlide(currentSlide)
 }
 
 const generateAnswerChoice = (answer, id) => {
@@ -70,6 +102,7 @@ const generateAnswerChoice = (answer, id) => {
 }
 
 const showResults = (correctAnswers) => {
+    buttonOptions.innerHTML = ''
     let answersCorrectCount = 0
     for (let i = 0; i < correctAnswers.length; i++) {
         if (document.querySelector(`input[name='question-${i+1}']:checked`)) {
@@ -82,16 +115,34 @@ const showResults = (correctAnswers) => {
     quizContent.textContent = `You got ${answersCorrectCount} out of ${correctAnswers.length} correct!`
 }
 
-const generateTimer = () => {
-    quizContent.innerHTML = `
-    <h3>Seconds remaining: <span id='timer'>90</span></h3>`
-    let count = 89
-    let interval = setInterval(() => {
-        document.getElementById('timer').textContent = count
-        count--;
-        if (count === 0){
-            clearInterval(interval);
-            showResults(correctAnswers);
-        }
-    }, 1000)
-}
+function showSlide(n) {
+    const slides = document.querySelectorAll(".slide");
+    slides[currentSlide].classList.remove('active-slide');
+    slides[n].classList.add('active-slide');
+    const previousButton = document.getElementById("previous");
+    const nextButton = document.getElementById("next");
+    const submitButton = document.querySelector('#submit')
+    currentSlide = n;
+    if(currentSlide === 0){
+      previousButton.style.display = 'none';
+    }
+    else{
+      previousButton.style.display = 'inline-block';
+    }
+    if(currentSlide === slides.length-1){
+      nextButton.style.display = 'none';
+      submitButton.style.display = 'inline-block';
+    }
+    else{
+      nextButton.style.display = 'inline-block';
+      submitButton.style.display = 'none';
+    }
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+  
+  function previousSlide() {
+    showSlide(currentSlide - 1);
+  }
