@@ -98,7 +98,6 @@ const buildQuestionsForm = (newList) => {
 async function postQuestions(e, newList) {
     e.preventDefault()
     for (i = 1; i < 11; i++) {
-
         let q = document.getElementById(`q${i}`).value
         let correct = document.getElementById(`correct${i}`).value
         let incorrecta = document.getElementById(`incorrecta${i}`).value
@@ -122,5 +121,6 @@ async function postQuestions(e, newList) {
             body: JSON.stringify(data)
         })
     }
+    buildNav(newList)
     console.log('questions done')
 }
