@@ -10,6 +10,7 @@ class ListsController < ApplicationController
     end
 
     def create
-        byebug
+        @list = List.create(title: params[:title], category: params[:category])
+        render json: @list
     end
 end
