@@ -5,7 +5,12 @@ class UsersController < ApplicationController
     end
 
     def create
-        byebug
+        @user = User.new(name: params[:name])
+        if @user.save
+            render json: @user, only: [:id, :name]
+        else
+            render json: { error: @user.errors.full_messages }
+        end
     end
 
     def destroy

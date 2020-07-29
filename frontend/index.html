@@ -9,11 +9,21 @@
 <body>
 <!-- Side navigation -->
     <div class="sidenav">
-      <button id="create-quiz-button">Create New Quiz</button>
+      <button id="create-quiz-button" style='display: none'>Create New Quiz</button>
     </div>
   
   <!-- Page content -->
   <div class="main">
+
+    <div class="login">
+      <form id='login'>
+        <label for="name">Name:</label><br>
+        <input type="text" name="name"><br><br>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class='front-page' style='display: none'>Welcome!</div>
 
     <div class="quiz-container">
         <div id="quiz"></div>
@@ -22,7 +32,7 @@
 
     </div>
   
-    <form id="quiz-form">
+    <form id="quiz-form" style='display: none'> 
       <label for="title">Trivia Quiz Name:</label><br>
       <input type="text" name="title"><br><br>
       <label for='categories'>Choose trivia category:</label>

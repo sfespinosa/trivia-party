@@ -5,18 +5,45 @@ const createQuizButton = document.getElementById('create-quiz-button')
 const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
 createQuizButton.addEventListener('click', () => buildListForm())
-
+const loginForm = document.getElementById('login')
+loginForm.addEventListener('submit', (e) => loginUser(e))
 const buttonOptions = document.querySelector('.buttons')
+const frontPage = document.querySelector('div.front-page')
 let currentSlide
 let interval
+let currentUser
 
+
+async function loginUser(e) {
+    e.preventDefault()
+    let data = {name: e.target.name.value}
+    let response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    
+    let json = await response.json()
+    if (json['error']) {
+        alert(json['error'])
+    } else {
+        currentUser = json
+        loginForm.style.display = 'none'
+        frontPage.style.display = 'block'
+        createQuizButton.style.display = 'block'
+        fetchList()
+    }
+}
 
 async function fetchList() {
     let response = await fetch('http://localhost:3000/lists')
     let json = await response.json()
     json.forEach(list => buildNav(list))
 } 
-fetchList()
+
 
 const buildNav = (list) => {
     let span = document.createElement('span')
@@ -26,6 +53,7 @@ const buildNav = (list) => {
 }
 
 const generateQuiz = (list) => {
+    frontPage.style.display = 'none'
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
     quizContainer.style.display = 'block'
@@ -153,10 +181,9 @@ function showSlide(n) {
     }
 }
 
-
-
-
 const buildListForm = () => {
+    buttonOptions.innerHTML = ''
+    frontPage.style.display = 'none'
     // quizContent.style.display = 'none'
     quizContainer.style.display = 'none'
     // document.getElementById('submit-quiz').style.display='none'
@@ -244,11 +271,10 @@ async function postQuestions(e, newList) {
     //clear to main page
 }
 
-  function nextSlide() {
+const nextSlide = () => {
     showSlide(currentSlide + 1);
   }
   
-  function previousSlide() {
+const previousSlide = () => {
     showSlide(currentSlide - 1);
   }
-
