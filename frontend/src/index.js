@@ -19,9 +19,9 @@ const buildNav = (list) => {
 }
 
 const generateQuiz = (list) => {
-    let correctAnswers = []
-    quizContent.textContent = ''
+    generateTimer()
     let form = document.createElement('form')
+    let correctAnswers = []
     let questionNumber = 1
     list['questions'].forEach(question => {
         // question
@@ -50,10 +50,11 @@ const generateQuiz = (list) => {
     })
     let submitButton = document.createElement('button')
     submitButton.textContent = "Submit"
+    submitButton.addEventListener('click', () => showResults(correctAnswers))
 
-    form.addEventListener('submit', (e) => showResults(e, correctAnswers))
+    // form.addEventListener('submit', (e) => showResults(e, correctAnswers))
     form.appendChild(submitButton)
-    
+
     quizContent.appendChild(form)
 }
 
@@ -68,9 +69,7 @@ const generateAnswerChoice = (answer, id) => {
     return label
 }
 
-const showResults = (e, correctAnswers) => {
-    e.preventDefault()
-    // debugger
+const showResults = (correctAnswers) => {
     let answersCorrectCount = 0
     for (let i = 0; i < correctAnswers.length; i++) {
         if (document.querySelector(`input[name='question-${i+1}']:checked`)) {
@@ -81,4 +80,18 @@ const showResults = (e, correctAnswers) => {
         }
     }
     quizContent.textContent = `You got ${answersCorrectCount} out of ${correctAnswers.length} correct!`
+}
+
+const generateTimer = () => {
+    quizContent.innerHTML = `
+    <h3>Seconds remaining: <span id='timer'>90</span></h3>`
+    let count = 89
+    let interval = setInterval(() => {
+        document.getElementById('timer').textContent = count
+        count--;
+        if (count === 0){
+            clearInterval(interval);
+            showResults(correctAnswers);
+        }
+    }, 1000)
 }
