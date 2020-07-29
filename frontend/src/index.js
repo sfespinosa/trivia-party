@@ -1,5 +1,6 @@
 const sidenav = document.querySelector('.sidenav')
 const quizContent = document.querySelector('#quiz')
+const quizContainer = document.querySelector('.quiz-container')
 const createQuizButton = document.getElementById('create-quiz-button')
 const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
@@ -26,6 +27,7 @@ const buildNav = (list) => {
 const generateQuiz = (list) => {
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
+    quizContainer.style.display = 'block'
     buttonOptions.innerHTML = ''
     // setting timer
     quizContent.innerHTML = `
@@ -146,18 +148,18 @@ function showSlide(n) {
       nextButton.style.display = 'inline-block';
       submitButton.style.display = 'none';
     }
-  }
-
-
 }
 
-const buildListForm = () => {
-    quizContent.textContent = ''
-    document.getElementById('submit-quiz').style.display='none'
-    questionsForm.style.display='none'
-    quizForm.style.display='block'
-    quizForm.addEventListener('submit', (e) => postList(e))
 
+
+
+const buildListForm = () => {
+    // quizContent.style.display = 'none'
+    quizContainer.style.display = 'none'
+    // document.getElementById('submit-quiz').style.display='none'
+    questionsForm.style.display = 'none'
+    quizForm.style.display = 'block'
+    quizForm.addEventListener('submit', (e) => postList(e))
 }
 
 async function postList(e) {
@@ -235,6 +237,8 @@ async function postQuestions(e, newList) {
     }
     buildNav(newList)
     console.log('questions done')
+
+    //clear to main page
 }
 
   function nextSlide() {
