@@ -1,20 +1,50 @@
+// Login pages
+const welcomePageDiv = document.querySelector('.welcome-page')
+const createUserDiv = document.querySelector('.create-user')
+const loginUserDiv = document.querySelector('.login')
+const createUserButton = document.getElementById('create-user-button')
+createUserButton.addEventListener('click', () => {
+    welcomePageDiv.style.display = 'none';
+    createUserDiv.style.display = 'block'
+})
+const loginUserButton = document.getElementById('login-user-button')
+loginUserButton.addEventListener('click', () => {
+    welcomePageDiv.style.display = 'none';
+    loginUserDiv.style.display = 'block'
+})
+const createUserForm = document.getElementById('create-user')
+createUserForm.addEventListener('submit', (e) => createUser(e))
+const loginForm = document.getElementById('login')
+loginForm.addEventListener('submit', (e) => loginUser(e))
+const frontPage = document.querySelector('div.front-page')
+
+
+// Side nav
 const sidenav = document.querySelector('.sidenav')
+let profileButton = document.getElementById('view-profile-button')
+profileButton.addEventListener('click', () => {
+    createUserForm.style.display = 'none'
+    quizForm.style.display = 'none'
+    frontPage.style.display = 'block'
+})
+
+// Main body
 const quizContent = document.querySelector('#quiz')
 const quizContainer = document.querySelector('.quiz-container')
 const createQuizButton = document.getElementById('create-quiz-button')
 const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
 createQuizButton.addEventListener('click', () => buildListForm())
-const loginForm = document.getElementById('login')
-loginForm.addEventListener('submit', (e) => loginUser(e))
 const buttonOptions = document.querySelector('.buttons')
-const frontPage = document.querySelector('div.front-page')
+const deleteUserButton = document.getElementById('delete-user-button')
+deleteUserButton.addEventListener('click', () => deleteUser())
+
 let currentSlide
 let interval
 let currentUser
 
 
-async function loginUser(e) {
+async function createUser(e) {
     e.preventDefault()
     let data = {name: e.target.name.value}
     let response = await fetch('http://localhost:3000/users', {
@@ -32,10 +62,43 @@ async function loginUser(e) {
     } else {
         currentUser = json
         loginForm.style.display = 'none'
+        createUserForm.style.display = 'none'
         frontPage.style.display = 'block'
         createQuizButton.style.display = 'block'
+        profileButton.style.display = 'block'
+        sidenav.style.display = 'block'
         fetchList()
     }
+}
+
+async function loginUser(e) {
+    e.preventDefault()
+    let response = await fetch(`http://localhost:3000/users/?name=${e.target.name.value}`)
+    let json = await response.json()
+    if (json['error']) {
+        alert(json['error'])
+    } else {
+        currentUser = json
+        loginForm.style.display = 'none'
+        createUserForm.style.display = 'none'
+        frontPage.style.display = 'block'
+        createQuizButton.style.display = 'block'
+        profileButton.style.display = 'block'
+        sidenav.style.display = 'block'
+        fetchList()
+    }
+}
+
+async function deleteUser() {
+    let response = await fetch(`http://localhost:3000/users/${currentUser.id}`, {method: 'DELETE'})
+    welcomePageDiv.style.display = 'block'
+    createUserDiv.style.display = 'none'
+    loginUserDiv.style.display = 'none'
+    frontPage.style.display = 'none'
+    quizContainer.style.display = 'none'
+    quizForm.style.display = 'none'
+    sidenav.style.display = 'none'
+    deleteUserButton.style.display = 'none'
 }
 
 async function fetchList() {
@@ -50,12 +113,15 @@ const buildNav = (list) => {
     span.textContent = list.title
     sidenav.appendChild(span)
     span.addEventListener('click', () => generateQuiz(list))
+
 }
 
 const generateQuiz = (list) => {
     frontPage.style.display = 'none'
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
+    createUserDiv.style.display = 'none'
+    loginUserDiv.style.display = 'none'
     quizContainer.style.display = 'block'
     buttonOptions.innerHTML = ''
 
@@ -86,7 +152,7 @@ const generateQuiz = (list) => {
         let questionDiv = document.createElement('div')
         questionDiv.className = `question-${questionNumber}`
         let h2 = document.createElement('h2')
-        h2.textContent = question.question
+        h2.innerHTML = question.question
         questionDiv.appendChild(h2)
 
         // answers
@@ -184,10 +250,9 @@ function showSlide(n) {
 const buildListForm = () => {
     buttonOptions.innerHTML = ''
     frontPage.style.display = 'none'
-    // quizContent.style.display = 'none'
     quizContainer.style.display = 'none'
-    // document.getElementById('submit-quiz').style.display='none'
     questionsForm.style.display = 'none'
+    loginUserDiv.style.display = 'none'
     quizForm.style.display = 'block'
     quizForm.addEventListener('submit', (e) => postList(e))
 }
