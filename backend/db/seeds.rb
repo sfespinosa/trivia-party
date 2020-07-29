@@ -29,5 +29,4 @@ questions["results"].each do |question|
         incorrect_answers: question["incorrect_answers"],
         list: List.find(3)
     )
-
 end

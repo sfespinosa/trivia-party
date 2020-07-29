@@ -9,17 +9,36 @@
 <body>
 <!-- Side navigation -->
     <div class="sidenav">
-
+      <button id="create-quiz-button">Create New Quiz</button>
     </div>
   
   <!-- Page content -->
   <div class="main">
+
     <div class="quiz-container">
         <div id="quiz"></div>
     </div>
     <div class='buttons'>
 
     </div>
+  
+    <form id="quiz-form">
+      <label for="title">Trivia Quiz Name:</label><br>
+      <input type="text" name="title"><br><br>
+      <label for='categories'>Choose trivia category:</label>
+      <select id="categories" name="category" size="3">
+        <option value="Sport">Sport</option>
+        <option value="Animal">Animal</option>
+        <option value="Celebrities">Celebrities</option>
+      </select><br><br>
+      <button id="continue" type="submit">Continue</button>
+    </form>
+
+    <form id="questions-form">
+
+    </form>
+
+
   </div>
 
     <script src="./src/index.js"></script>
