@@ -7,6 +7,7 @@ createQuizButton.addEventListener('click', () => buildListForm())
 
 const buttonOptions = document.querySelector('.buttons')
 let currentSlide
+let interval
 
 
 async function fetchList() {
@@ -27,11 +28,13 @@ const generateQuiz = (list) => {
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
     buttonOptions.innerHTML = ''
+
     // setting timer
     quizContent.innerHTML = `
     <h3>Seconds remaining: <span id='timer'>90</span></h3>`
     let count = 89
-    let interval = setInterval(() => {
+    clearInterval(interval)
+    interval = setInterval(() => {
         document.getElementById('timer').textContent = count
         count--;
         if (count === 0){
@@ -147,9 +150,6 @@ function showSlide(n) {
       submitButton.style.display = 'none';
     }
   }
-
-
-}
 
 const buildListForm = () => {
     quizContent.textContent = ''
