@@ -1,4 +1,6 @@
 /* The sidebar menu */
+@import url("https://fonts.googleapis.com/css?family=Neucha|Cabin+Sketch&display=swap");
+
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 160px; /* Set the width of the sidebar */
@@ -6,52 +8,155 @@
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
-  }
-  
-  /* The navigation menu links */
-  .sidenav span {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-  }
-  
-  /* When you mouse over the navigation links, change their color */
-  .sidenav span:hover {
-    color: #f1f1f1;
-  }
-  
-  /* Style page content */
-  .main {
-    margin-left: 160px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
-  }
-  
-  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
 
-  .slide{
-    position: absolute;
-    left: 0px;
-    top: 15px;
-    width: 100%;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  .active-slide{
-    opacity: 1;
-    z-index: 2;
-  }
-  .quiz-container{
-    position: relative;
-    height: 150px;
-    margin-top: 40px;
-  }
+    background: transparent;
+    background:  #231a60;
+
+}
+
+/* The navigation menu links */
+.sidenav span {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav span:hover {
+  color: #f1f1f1;
+}
+
+
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 15px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
+.quiz-container{
+  position: relative;
+  height: 150px;
+  margin-top: 40px;
+}
+
+/* Changes */
+body {
+  /* line-height: 24px; */
+  /* font-size: 14px; */
+  /* font-family: "Roboto", sans-serif; */
+  /* font-weight: 500; */
+  /* color: white; */
+  font-family: "Cabin Sketch", cursive;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600; }
+
+.primary_btn {
+  display: inline-block;
+  background: -webkit-linear-gradient(to right, #3fcaff 0%, #a4ffb0 51%, #3fcaff 100%);
+  background: -moz-linear-gradient(to right, #3fcaff 0%, #a4ffb0 51%, #3fcaff 100%);
+  background: -ms-linear-gradient(to right, #3fcaff 0%, #a4ffb0 51%, #3fcaff 100%);
+  background: -o-linear-gradient(to right, #3fcaff 0%, #a4ffb0 51%, #3fcaff 100%);
+  background: linear-gradient(to right, #3fcaff 0%, #a4ffb0 51%, #3fcaff 100%);
+  background-size: 200% auto;
+  padding: 0px 35px;
+  color: #222222;
+  letter-spacing: 1px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 50px;
+  border-radius: 5px;
+  outline: none !important;
+  box-shadow: 0px 10px 30px rgba(163, 255, 177, 0.2);
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: all 0.4s ease 0s;
+  -moz-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+  text-transform: uppercase;
+}
+.primary_btn:hover {
+  background-position: right center;
+  color: #22195e; 
+}
+
+.welcome-page {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  color: white;
+  /* background: linear-gradient(to right, #2b2075 0%, #5c4ed4 50%, #2b2075 100%); */
+  background-image: url("http://cdn.lowgif.com/full/cd13a280d6fa97e5-pixilart-fireworks-gif-by-peppermint.gif");
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
+.login {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  background: white;
+}
+.create-user {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  background: white;
+}
+
+.front-page {
+}
+
+.quiz-container {
+}
+
+#quiz-form {
+}
+
+#questions-form {
+}
