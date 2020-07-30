@@ -6,4 +6,7 @@ class Score < ApplicationRecord
     self.user.name
   end
   
+  def list_title
+    self.list.title
+  end
 end

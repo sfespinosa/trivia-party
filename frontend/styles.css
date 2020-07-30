@@ -70,7 +70,7 @@ body {
   /* font-family: "Roboto", sans-serif; */
   /* font-weight: 500; */
   /* color: white; */
-  font-family: "Cabin Sketch", cursive;
+  /* font-family: "Cabin Sketch", cursive; */
 }
 
 h1,
@@ -159,4 +159,42 @@ h6 {
 }
 
 #questions-form {
+}
+
+/* Float four columns side by side */
+.card-column {
+  float: left;
+  width: 50%;
+  padding: 20px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.question-cards{margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.question-cards:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 24px;
+  text-align: left;
+  background-color: white;
+}
+.card:hover {
+  box-shadow: 0 10px 20px 0 rgba(50, 30, 97, 0.2); /* this adds the "card" effect */
+
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
 }

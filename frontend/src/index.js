@@ -1,3 +1,8 @@
+let currentSlide
+let interval
+let currentUser
+let userTestResults
+
 // Login pages
 const welcomePageDiv = document.querySelector('.welcome-page')
 const createUserDiv = document.querySelector('.create-user')
@@ -13,7 +18,6 @@ loginUserButton.addEventListener('click', () => {
     welcomePageDiv.style.display = 'none'
     loginUserDiv.style.display = 'block'
     sidenav.style.display = 'block'
-
 })
 const createUserForm = document.getElementById('create-user')
 createUserForm.addEventListener('submit', (e) => createUser(e))
@@ -29,7 +33,9 @@ profileButton.addEventListener('click', () => {
     quizContainer.style.display = 'none'
     quizForm.style.display = 'none'
     buttonOptions.style.display = 'none'
+    resultsList.style.display = 'none'
     frontPage.style.display = 'block'
+    fetchUserScores(currentUser)
 })
 
 // Main body
@@ -46,11 +52,6 @@ deleteUserButton.addEventListener('click', () => deleteUser())
 
 const resultsPage = document.querySelector('div.user-results')
 const resultsList = document.getElementById('ranking')
-
-let currentSlide
-let interval
-let currentUser
-let userTestResults
 
 async function createUser(e) {
     e.preventDefault()
@@ -69,8 +70,8 @@ async function createUser(e) {
         alert(json['error'])
     } else {
         currentUser = json
-        loginForm.style.display = 'none'
-        createUserForm.style.display = 'none'
+        loginUserDiv.style.display = 'none'
+        createUserDiv.style.display = 'none'
         frontPage.style.display = 'block'
         createQuizButton.style.display = 'block'
         profileButton.style.display = 'block'
@@ -93,6 +94,7 @@ async function loginUser(e) {
         createQuizButton.style.display = 'block'
         profileButton.style.display = 'block'
         sidenav.style.display = 'block'
+        fetchUserScores(currentUser)
         fetchList()
     }
 }
@@ -134,6 +136,7 @@ const generateQuiz = (list) => {
     quizContainer.style.display = 'block'
     resultsList.style.display = 'none'
     resultsPage.style.display = 'none'
+    buttonOptions.style.display = 'block'
     buttonOptions.innerHTML = ''
 
     // setting timer
@@ -221,7 +224,7 @@ const generateAnswerChoice = (answer, id) => {
 }
 
 const showResults = (correctAnswers, listId) => {
-    buttonOptions.innerHTML = ''
+    buttonOptions.style.dispaly = 'none'
     quizContainer.style.display = 'none'
     let answersCorrectCount = 0
     for (let i = 0; i < correctAnswers.length; i++) {
@@ -260,13 +263,14 @@ function showSlide(n) {
 }
 
 const buildListForm = () => {
-    buttonOptions.innerHTML = ''
+    buttonOptions.style.display = 'none'
     resultsList.style.display = 'none'
     resultsPage.style.display = 'none'
     frontPage.style.display = 'none'
     quizContainer.style.display = 'none'
     questionsForm.style.display = 'none'
     loginUserDiv.style.display = 'none'
+    resultsList.style.display = 'none'
     quizForm.style.display = 'block'
     quizForm.addEventListener('submit', (e) => postList(e))
 }
@@ -289,6 +293,7 @@ async function postList(e) {
     console.log(newList)
     quizForm.reset()
     buildQuestionsForm(newList)
+    // buildQuestionsForm(1)
 }
 
 const buildQuestionsForm = (newList) => {
@@ -297,22 +302,27 @@ const buildQuestionsForm = (newList) => {
     for (i = 1; i < 11; i++) {
         let div = document.createElement('div')
         div.innerHTML = `
-            <label for="question">Question ${i}:</label><br>
-            <textarea rows="3" cols="50" name="question${1}" id="q${i}"></textarea><br><br>
-            <label for="correct-answer">Correct answer:</label><br>
-            <input type="text" name="correct" id="correct${i}"><br><br>
-            <label for="incorrect-answer">Incorrect answer 1:</label><br>
-            <input type="text" name="incorrect" id="incorrecta${i}"><br><br>
-            <label for="incorrect-answer">Incorrect answer 2:</label><br>
-            <input type="text" name="incorrect" id="incorrectb${i}"><br><br>
-            <label for="incorrect-answer">Incorrect answer 3:</label><br>
-            <input type="text" name="incorrect" id="incorrectc${i}"><br><br>
+            <div class="card-column">
+            <div class="card">
+            <label for="question">Question ${i}:</label>
+            <textarea rows="3" cols="50" name="question${1}" id="q${i}"></textarea><br>
+            <label for="correct-answer">Correct answer:</label>
+            <input type="text" name="correct" id="correct${i}"><br>
+            <label for="incorrect-answer">Incorrect answer 1:</label>
+            <input type="text" name="incorrect" id="incorrecta${i}"><br>
+            <label for="incorrect-answer">Incorrect answer 2:</label>
+            <input type="text" name="incorrect" id="incorrectb${i}"><br>
+            <label for="incorrect-answer">Incorrect answer 3:</label>
+            <input type="text" name="incorrect" id="incorrectc${i}">
+            </div>
+            </div>
         `
         questionsForm.appendChild(div)
     }
     let button = document.createElement('button')
     button.id = 'create-quiz'
     button.type = 'submit'
+    button.className = 'primary_btn'
     button.textContent = 'Create Quiz'
     questionsForm.appendChild(button)
     questionsForm.addEventListener('submit', (e) => postQuestions(e, newList))
@@ -344,10 +354,14 @@ async function postQuestions(e, newList) {
             body: JSON.stringify(data)
         })
     }
+    console.log('Questions done')
     buildNav(newList)
-    console.log('questions done')
-
-    //clear to main page
+    questionsForm.reset()
+    questionsForm.style.display = 'none'
+    quizContainer.style.display = 'none'
+    quizForm.style.display = 'none'
+    buttonOptions.style.display = 'none'
+    frontPage.style.display = 'block'
 }
 
 const nextSlide = () => {
@@ -412,6 +426,23 @@ const buildAllScores = (score) => {
     li.textContent = `${score.user_name}: ${score.score}`
     resultsList.appendChild(li)
 }
+
+async function fetchUserScores(currentUser) {
+    let response = await fetch(`http://localhost:3000/scores?user_id=${currentUser.id}`)
+    let json = await response.json()
+    resultsList.innerHTML = ''
+    resultsList.innerHTML = '<h3>Your quiz scores:</h3>'
+    json.sort((a,b) => b.score - a.score)
+    json.forEach(score => buildUserScores(score))
+}
+
+const buildUserScores = (score) => {
+    resultsList.style.display = 'block'
+    let li = document.createElement('li')
+    li.textContent = `${score.list_title}: ${score.score}`
+    resultsList.appendChild(li)
+}
+
 
 const userOnList = (listId, userId) => {
     fetch(`http://localhost:3000/scores?user_id=${userId}&list_id=${listId}`)

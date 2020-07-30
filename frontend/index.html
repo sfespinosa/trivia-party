@@ -43,7 +43,6 @@
 
     <div class='front-page' style='display: none'>
       <h1>Welcome!</h1><br><br>
-      <h3>Your quiz scores:</h3><br><br>
       <button id="delete-user-button" class="primary_btn" >Delete Your Account</button>
 
     </div>
@@ -57,20 +56,37 @@
     <div class='user-results' style='display: none'></div>
     <div class='list-results'><ol id='ranking'></ol></div>
   
-    <form id="quiz-form" style='display: none'> 
+    <form id="quiz-form" class="form-group" style='display: none'> 
       <h1>Create a new quiz!</h1>
       <label for="title">Trivia Quiz Name:</label><br>
-      <input type="text" name="title"><br><br>
+      <input type="text" class="form-control" name="title"><br>
       <label for='categories'>Choose trivia category:</label>
-      <select id="categories" name="category" size="3">
-        <option value="Sport">Sport</option>
-        <option value="Animal">Animal</option>
+      <select class="form-control" id="categories" name="category" size="3">
+        <option value="Animals">Animals</option>
+        <option value="Anime">Anime</option>
+        <option value="Art">Art</option>
+        <option value="Books">Books</option>
+        <option value="Board Games">Board Games</option>
+        <option value="Cartoon & Animations">Cartoon & Animations</option>
         <option value="Celebrities">Celebrities</option>
+        <option value="Computers">Computers</option>
+        <option value="Film">Film</option>
+        <option value="General Knowledge">General Knowledge</option>
+        <option value="Geography">Geography</option>
+        <option value="History">History</option>
+        <option value="Music">Music</option>
+        <option value="Mythology">Mythology</option>
+        <option value="Politics">Politics</option>
+        <option value="Science & Nature">Science & Nature</option>
+        <option value="Sports">Sports</option>
+        <option value="Television">Television</option>
+        <option value="Vehicles">Vehicles</option>
+        <option value="Video Games">Video Games</option>
       </select><br><br>
-      <button id="continue" type="submit">Continue</button>
+      <button id="continue" class="primary_btn" type="submit">Continue</button>
     </form>
 
-    <form id="questions-form">
+    <form id="questions-form" class="question-cards">
 
     </form>
 
