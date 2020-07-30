@@ -23,8 +23,9 @@ const frontPage = document.querySelector('div.front-page')
 const sidenav = document.querySelector('.sidenav')
 let profileButton = document.getElementById('view-profile-button')
 profileButton.addEventListener('click', () => {
-    createUserForm.style.display = 'none'
+    quizContainer.style.display = 'none'
     quizForm.style.display = 'none'
+    buttonOptions.style.display = 'none'
     frontPage.style.display = 'block'
 })
 
@@ -83,8 +84,8 @@ async function loginUser(e) {
         alert(json['error'])
     } else {
         currentUser = json
-        loginForm.style.display = 'none'
-        createUserForm.style.display = 'none'
+        loginUserDiv.style.display = 'none'
+        createUserDiv.style.display = 'none'
         frontPage.style.display = 'block'
         createQuizButton.style.display = 'block'
         profileButton.style.display = 'block'
