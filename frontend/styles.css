@@ -1,5 +1,7 @@
 /* The sidebar menu */
 @import url("https://fonts.googleapis.com/css?family=Neucha|Cabin+Sketch&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Rajdhani");
+
 
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
@@ -35,7 +37,7 @@
 .main {
   margin-left: 160px; /* Same as the width of the sidebar */
   padding: 0px 10px;
-
+  /* background:  #F0F8FF; */
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -44,24 +46,7 @@
   .sidenav a {font-size: 18px;}
 }
 
-.slide{
-  position: absolute;
-  left: 0px;
-  top: 15px;
-  width: 100%;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-.active-slide{
-  opacity: 1;
-  z-index: 2;
-}
-.quiz-container{
-  position: relative;
-  height: 150px;
-  margin-top: 40px;
-}
+
 
 /* Changes */
 body {
@@ -70,7 +55,9 @@ body {
   /* font-family: "Roboto", sans-serif; */
   /* font-weight: 500; */
   /* color: white; */
-  /* font-family: "Cabin Sketch", cursive; */
+  font-family: "Rajdhani", sans-serif;
+  background: transparent;
+  background:  #F0F8FF;
 }
 
 h1,
@@ -152,14 +139,12 @@ h6 {
 .front-page {
 }
 
-.quiz-container {
-}
-
 #quiz-form {
 }
 
 #questions-form {
 }
+
 
 /* Float four columns side by side */
 .card-column {
@@ -197,4 +182,95 @@ h6 {
     display: block;
     margin-bottom: 20px;
   }
+
+/* generate quiz */
+
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 70px;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
+
+.quiz-container{
+	/* font-size: 20px; */
+	/* font-family: 'Work Sans', sans-serif; */
+	color: #333;
+  font-weight: 300;
+  text-align: center;
+  /* background-color: #f8f6f0; */
+  position: relative;
+  height: 200px;
+  margin-top: 40px;
+}
+
+.question{
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label{
+  display: block;
+  margin-bottom: 10px;
+}
+
+.buttons{
+  position: absolute;
+  left: 0px;
+  top: 270px;
+  width: 100%;
+  z-index: 1;
+}
+
+#main-progress-bar {
+  width: 100%;
+  background-color: #696969;
+  margin-bottom: 5px;
+}
+
+#user-progress-bar {
+  width: 0%;
+  height: 30px;
+  background-color: #3fcaff;
+  margin-bottom: 5px;
+
+}
+
+.user-results {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  /* background: white; */
+}
+
+.list-results {
+  position: fixed;
+  top:50px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  /* background: white; */
+}
+
+ol#ranking li {
+  font-size: 20px;
 }

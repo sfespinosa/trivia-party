@@ -12,12 +12,15 @@ createUserButton.addEventListener('click', () => {
     welcomePageDiv.style.display = 'none'
     createUserDiv.style.display = 'block'
     sidenav.style.display = 'block'
+    quizContainer.style.display = 'none'
 })
 const loginUserButton = document.getElementById('login-user-button')
 loginUserButton.addEventListener('click', () => {
     welcomePageDiv.style.display = 'none'
     loginUserDiv.style.display = 'block'
     sidenav.style.display = 'block'
+    quizContainer.style.display = 'none'
+
 })
 const createUserForm = document.getElementById('create-user')
 createUserForm.addEventListener('submit', (e) => createUser(e))
@@ -46,12 +49,13 @@ const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
 createQuizButton.addEventListener('click', () => buildListForm())
 const buttonOptions = document.querySelector('.buttons')
-
+const userProgressBar = document.getElementById('user-progress-bar')
 const deleteUserButton = document.getElementById('delete-user-button')
 deleteUserButton.addEventListener('click', () => deleteUser())
 
 const resultsPage = document.querySelector('div.user-results')
-const resultsList = document.getElementById('ranking')
+const resultsList = document.querySelector('div.list-results')
+const resultsOrderedList = document.getElementById('ranking')
 
 async function createUser(e) {
     e.preventDefault()
@@ -141,7 +145,7 @@ const generateQuiz = (list) => {
 
     // setting timer
     quizContent.innerHTML = `
-    <h3>Seconds remaining: <span id='timer'>90</span></h3>`
+    <h4>Time remaining: <span id='timer'>90</span></h4>`
     let count = 89
     clearInterval(interval)
     interval = setInterval(() => {
@@ -164,9 +168,9 @@ const generateQuiz = (list) => {
 
         // question
         let questionDiv = document.createElement('div')
-        questionDiv.className = `question-${questionNumber}`
+        questionDiv.className = `question`
         let h2 = document.createElement('h2')
-        h2.innerHTML = question.question
+        h2.innerHTML = `<strong>${question.question}</strong>`
         questionDiv.appendChild(h2)
 
         // answers
@@ -190,25 +194,28 @@ const generateQuiz = (list) => {
     let previousButton = document.createElement('button')
     previousButton.textContent = "Previous Question"
     previousButton.id = 'previous'
+    previousButton.className = 'primary_btn'
     previousButton.addEventListener('click', () => previousSlide())
 
     // next button
     let nextButton = document.createElement('button')
     nextButton.textContent = "Next Question"
     nextButton.id = 'next'
+    nextButton.className = 'primary_btn'
     nextButton.addEventListener('click', () => nextSlide())
 
     // submit button
     let submitButton = document.createElement('button')
     submitButton.textContent = "Submit Quiz"
     submitButton.id = 'submit'
+    submitButton.className = 'primary_btn'
     submitButton.addEventListener('click', () => {
         clearInterval(interval)
         showResults(correctAnswers, list.id)
     })
 
     buttonOptions.append(previousButton, nextButton, submitButton)
-
+    userProgressBar.style.width = '0%'
     showSlide(currentSlide)
 }
 
@@ -218,7 +225,7 @@ const generateAnswerChoice = (answer, id) => {
     input.type = 'radio'
     input.value = answer
     input.name = `question-${id}`
-    label.innerHTML = answer
+    label.innerHTML = ` ${answer}`
     label.prepend(input)
     return label
 }
@@ -366,10 +373,14 @@ async function postQuestions(e, newList) {
 
 const nextSlide = () => {
     showSlide(currentSlide + 1);
+    let width = userProgressBar.style.width.replace(/\W/,"")
+    userProgressBar.style.width = (parseInt(width, 10) + 10).toString() + '%'
   }
   
 const previousSlide = () => {
     showSlide(currentSlide - 1);
+    let width = userProgressBar.style.width.replace(/\W/,"")
+    userProgressBar.style.width = (parseInt(width, 10) - 10).toString() + '%'
   }
 
 async function postScore(score, listId){
@@ -401,16 +412,16 @@ async function postScore(score, listId){
 }
 
 const displayResults = (score) => {
-    resultsList.style.display = 'block'
-    resultsList.innerHTML = ''
+    resultsOrderedList.innerHTML = ''
 
     fetchListScores(score)
 
     resultsPage.style.display = 'block'
+    resultsList.style.display = 'block'
     resultsPage.innerHTML = `
-    <h2>You got ${score.score} questions correct!</h2>
+    <h1>You got ${score.score} questions correct!</h1>
     `
-    resultsPage.textContent = `You got ${score.score} questions correct!`
+    // resultsPage.textContent = `You got ${score.score} questions correct!`
 }
 
 async function fetchListScores(score) {
@@ -421,10 +432,10 @@ async function fetchListScores(score) {
 }
 
 const buildAllScores = (score) => {
-    resultsList.style.display = 'block'
+    resultsOrderedList.style.display = 'block'
     let li = document.createElement('li')
     li.textContent = `${score.user_name}: ${score.score}`
-    resultsList.appendChild(li)
+    resultsOrderedList.appendChild(li)
 }
 
 async function fetchUserScores(currentUser) {
