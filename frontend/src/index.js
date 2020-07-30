@@ -46,7 +46,8 @@ const deleteUserButton = document.getElementById('delete-user-button')
 deleteUserButton.addEventListener('click', () => deleteUser())
 
 const resultsPage = document.querySelector('div.user-results')
-const resultsList = document.getElementById('ranking')
+const resultsList = document.querySelector('div.list-results')
+const resultsOrderedList = document.getElementById('ranking')
 
 let currentSlide
 let interval
@@ -140,7 +141,7 @@ const generateQuiz = (list) => {
 
     // setting timer
     quizContent.innerHTML = `
-    <h3>Time remaining: <span id='timer'>90</span></h3>`
+    <h4>Time remaining: <span id='timer'>90</span></h4>`
     let count = 89
     clearInterval(interval)
     interval = setInterval(() => {
@@ -164,9 +165,9 @@ const generateQuiz = (list) => {
         // question
         let questionDiv = document.createElement('div')
         questionDiv.className = `question`
-        // let h2 = document.createElement('h2')
-        questionDiv.innerHTML = question.question
-        // questionDiv.appendChild(h2)
+        let h2 = document.createElement('h2')
+        h2.innerHTML = `<strong>${question.question}</strong>`
+        questionDiv.appendChild(h2)
 
         // answers
         let answerOptions = []
@@ -396,16 +397,16 @@ async function postScore(score, listId){
 }
 
 const displayResults = (score) => {
-    resultsList.style.display = 'block'
-    resultsList.innerHTML = ''
+    resultsOrderedList.innerHTML = ''
 
     fetchListScores(score)
 
     resultsPage.style.display = 'block'
+    resultsList.style.display = 'block'
     resultsPage.innerHTML = `
-    <h2>You got ${score.score} questions correct!</h2>
+    <h1>You got ${score.score} questions correct!</h1>
     `
-    resultsPage.textContent = `You got ${score.score} questions correct!`
+    // resultsPage.textContent = `You got ${score.score} questions correct!`
 }
 
 async function fetchListScores(score) {
@@ -416,10 +417,10 @@ async function fetchListScores(score) {
 }
 
 const buildAllScores = (score) => {
-    resultsList.style.display = 'block'
+    resultsOrderedList.style.display = 'block'
     let li = document.createElement('li')
     li.textContent = `${score.user_name}: ${score.score}`
-    resultsList.appendChild(li)
+    resultsOrderedList.appendChild(li)
 }
 
 const userOnList = (listId, userId) => {
