@@ -41,12 +41,15 @@
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+@media screen and (max-height: 450px) and (max-width: 600px) {
+  .sidenav {padding-top: 15px;};
+  .sidenav a {font-size: 18px;};
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  } 
 }
-
-
 
 /* Changes */
 body {
@@ -95,6 +98,7 @@ h6 {
   transition: all 0.4s ease 0s;
   text-transform: uppercase;
 }
+
 .primary_btn:hover {
   background-position: right center;
   color: #22195e; 
@@ -125,6 +129,7 @@ h6 {
   padding-top: 100px;
   background: white;
 }
+
 .create-user {
   position: fixed;
   top:0px;
@@ -140,6 +145,11 @@ h6 {
 }
 
 #quiz-form {
+  position: absolute;
+  box-sizing: border-box;
+  width: 50%;
+  padding: 10px;
+
 }
 
 #questions-form {
@@ -176,12 +186,12 @@ h6 {
 }
 
 /* Responsive columns - one column layout (vertical) on small screens */
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .column {
     width: 100%;
     display: block;
     margin-bottom: 20px;
-  }
+  } */
 
 /* generate quiz */
 
@@ -256,7 +266,7 @@ h6 {
   bottom:0px;
   left:0px;
   text-align: center;
-  padding-top: 100px;
+  margin-top: 100px;
   /* background: white; */
 }
 
@@ -267,7 +277,7 @@ h6 {
   bottom:0px;
   left:0px;
   text-align: center;
-  padding-top: 100px;
+  margin-top: 100px;
   /* background: white; */
 }
 

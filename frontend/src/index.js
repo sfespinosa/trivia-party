@@ -20,7 +20,6 @@ loginUserButton.addEventListener('click', () => {
     loginUserDiv.style.display = 'block'
     sidenav.style.display = 'block'
     quizContainer.style.display = 'none'
-
 })
 const createUserForm = document.getElementById('create-user')
 createUserForm.addEventListener('submit', (e) => createUser(e))
@@ -38,7 +37,9 @@ profileButton.addEventListener('click', () => {
     buttonOptions.style.display = 'none'
     resultsList.style.display = 'block'
     frontPage.style.display = 'block'
+    resultsPage.style.display = 'none'
     fetchUserScores(currentUser)
+
 })
 
 // Main body
@@ -52,10 +53,8 @@ const buttonOptions = document.querySelector('.buttons')
 const userProgressBar = document.getElementById('user-progress-bar')
 const deleteUserButton = document.getElementById('delete-user-button')
 deleteUserButton.addEventListener('click', () => deleteUser())
-
 const resultsPage = document.querySelector('div.user-results')
 const resultsList = document.querySelector('div.list-results')
-const resultsOrderedList = document.getElementById('ranking')
 
 async function createUser(e) {
     e.preventDefault()
@@ -105,14 +104,18 @@ async function loginUser(e) {
 
 async function deleteUser() {
     let response = await fetch(`http://localhost:3000/users/${currentUser.id}`, {method: 'DELETE'})
+    let json = await response.json()
     welcomePageDiv.style.display = 'block'
     createUserDiv.style.display = 'none'
     loginUserDiv.style.display = 'none'
     frontPage.style.display = 'none'
     quizContainer.style.display = 'none'
+    buttonOptions.style.display = 'none'
+    resultsList.style.display = 'none'
     quizForm.style.display = 'none'
     sidenav.style.display = 'none'
     deleteUserButton.style.display = 'none'
+    alert(json['message'])
 }
 
 async function fetchList() {
@@ -297,15 +300,14 @@ async function postList(e) {
         body: JSON.stringify(data)
     })
     let newList = await response.json()
-    console.log(newList)
     quizForm.reset()
     buildQuestionsForm(newList)
-    // buildQuestionsForm(1)
 }
 
 const buildQuestionsForm = (newList) => {
     quizForm.style.display = 'none'
     questionsForm.style.display = 'block'
+    questionsForm.innerHTML = ''
     for (i = 1; i < 11; i++) {
         let div = document.createElement('div')
         div.innerHTML = `
@@ -337,6 +339,7 @@ const buildQuestionsForm = (newList) => {
 
 async function postQuestions(e, newList) {
     e.preventDefault()
+    // debugger
     for (i = 1; i < 11; i++) {
         let q = document.getElementById(`q${i}`).value
         let correct = document.getElementById(`correct${i}`).value
@@ -361,8 +364,10 @@ async function postQuestions(e, newList) {
             body: JSON.stringify(data)
         })
     }
+    let fetchNewList = await fetch(`http://localhost:3000/lists/${newList.id}`)
+    let list = await fetchNewList.json()
     console.log('Questions done')
-    buildNav(newList)
+    buildNav(list)
     questionsForm.reset()
     questionsForm.style.display = 'none'
     quizContainer.style.display = 'none'
@@ -412,7 +417,7 @@ async function postScore(score, listId){
 }
 
 const displayResults = (score) => {
-    resultsOrderedList.innerHTML = ''
+    
 
     fetchListScores(score)
 
@@ -421,6 +426,8 @@ const displayResults = (score) => {
     resultsPage.innerHTML = `
     <h1>You got ${score.score} questions correct!</h1>
     `
+    resultsList.innerHTML = "<ol id='ranking'></ol>"
+    const resultsOrderedList = document.getElementById('ranking')
     // resultsPage.textContent = `You got ${score.score} questions correct!`
 }
 
@@ -432,6 +439,7 @@ async function fetchListScores(score) {
 }
 
 const buildAllScores = (score) => {
+    const resultsOrderedList = document.getElementById('ranking')
     resultsOrderedList.style.display = 'block'
     let li = document.createElement('li')
     li.textContent = `${score.user_name}: ${score.score}`
