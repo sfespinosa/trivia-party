@@ -5,7 +5,7 @@ class ScoresController < ApplicationController
         elsif params[:list_id]
             @scores = Score.all.find_all { |score| score.list_id == params[:list_id].to_i }
         elsif params[:user_id]
-            @scores = Score.find_by(user_id: params[:user_id])
+            @scores = Score.all.find_all { |score| score.user_id == params[:user_id].to_i }
         else
             @scores = Score.all
         end
