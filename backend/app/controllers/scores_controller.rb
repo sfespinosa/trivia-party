@@ -23,7 +23,9 @@ class ScoresController < ApplicationController
     end
 
     def update
-        byebug
+        @score = Score.find(params[:id])
+        @score.update(score: params[:score], user_id: params[:user_id], list_id: params[:list_id])
+        render json: @score
     end
     
 end

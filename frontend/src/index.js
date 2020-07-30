@@ -121,6 +121,7 @@ const buildNav = (list) => {
 }
 
 const generateQuiz = (list) => {
+    userOnList(list.id, currentUser.id)
     frontPage.style.display = 'none'
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
@@ -355,21 +356,21 @@ const previousSlide = () => {
 
 async function postScore(score, listId){
     let verb
+    let URL = `http://localhost:3000/scores`
     let data = {
         score: score,
         user_id: currentUser.id,
         list_id: listId
     }
 
-    userOnList(listId, currentUser.id)
-
     if (userTestResults) {
         verb = 'PATCH'
+        URL = URL + `/${userTestResults.id}`
     } else {
         verb = 'POST'
     }
 
-    let response = await fetch('http://localhost:3000/scores', {
+    let response = await fetch(URL, {
         method: verb,
         headers: {
             'Content-Type': 'application/json',
