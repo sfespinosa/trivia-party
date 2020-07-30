@@ -208,3 +208,25 @@ h6 {
   margin-bottom: 5px;
 
 }
+
+.user-results {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  /* background: white; */
+}
+
+.list-results {
+  position: fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+  text-align: center;
+  padding-top: 100px;
+  /* background: white; */
+}
