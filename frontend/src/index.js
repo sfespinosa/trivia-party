@@ -4,13 +4,16 @@ const createUserDiv = document.querySelector('.create-user')
 const loginUserDiv = document.querySelector('.login')
 const createUserButton = document.getElementById('create-user-button')
 createUserButton.addEventListener('click', () => {
-    welcomePageDiv.style.display = 'none';
+    welcomePageDiv.style.display = 'none'
     createUserDiv.style.display = 'block'
+    sidenav.style.display = 'block'
 })
 const loginUserButton = document.getElementById('login-user-button')
 loginUserButton.addEventListener('click', () => {
-    welcomePageDiv.style.display = 'none';
+    welcomePageDiv.style.display = 'none'
     loginUserDiv.style.display = 'block'
+    sidenav.style.display = 'block'
+
 })
 const createUserForm = document.getElementById('create-user')
 createUserForm.addEventListener('submit', (e) => createUser(e))

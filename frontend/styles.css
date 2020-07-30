@@ -1,4 +1,6 @@
 /* The sidebar menu */
+@import url("https://fonts.googleapis.com/css?family=Neucha|Cabin+Sketch&display=swap");
+
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 160px; /* Set the width of the sidebar */
@@ -27,6 +29,7 @@
 .sidenav span:hover {
   color: #f1f1f1;
 }
+
 
 /* Style page content */
 .main {
@@ -62,11 +65,12 @@
 
 /* Changes */
 body {
-  line-height: 24px;
-  font-size: 14px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  color: #eeeded;
+  /* line-height: 24px; */
+  /* font-size: 14px; */
+  /* font-family: "Roboto", sans-serif; */
+  /* font-weight: 500; */
+  /* color: white; */
+  font-family: "Cabin Sketch", cursive;
 }
 
 h1,
@@ -117,7 +121,11 @@ h6 {
   left:0px;
   text-align: center;
   padding-top: 100px;
-  background: linear-gradient(to right, #2b2075 0%, #5c4ed4 50%, #2b2075 100%);
+  color: white;
+  /* background: linear-gradient(to right, #2b2075 0%, #5c4ed4 50%, #2b2075 100%); */
+  background-image: url("http://cdn.lowgif.com/full/cd13a280d6fa97e5-pixilart-fireworks-gif-by-peppermint.gif");
+  background-repeat: no-repeat;
+  background-size: cover; 
 }
 
 .login {
@@ -128,7 +136,7 @@ h6 {
   left:0px;
   text-align: center;
   padding-top: 100px;
-  background: linear-gradient(to right, #2b2075 0%, #5c4ed4 50%, #2b2075 100%);
+  background: white;
 }
 .create-user {
   position: fixed;
@@ -138,21 +146,17 @@ h6 {
   left:0px;
   text-align: center;
   padding-top: 100px;
-  background: linear-gradient(to right, #2b2075 0%, #5c4ed4 50%, #2b2075 100%);
+  background: white;
 }
 
 .front-page {
-  color: black;
 }
 
 .quiz-container {
-  color: black
 }
 
 #quiz-form {
-  color: black
 }
 
 #questions-form {
-  color: black
 }
