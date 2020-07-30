@@ -33,7 +33,7 @@ profileButton.addEventListener('click', () => {
     quizContainer.style.display = 'none'
     quizForm.style.display = 'none'
     buttonOptions.style.display = 'none'
-    resultsList.style.display = 'none'
+    resultsList.style.display = 'block'
     frontPage.style.display = 'block'
     fetchUserScores(currentUser)
 })
