@@ -36,13 +36,17 @@ const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
 createQuizButton.addEventListener('click', () => buildListForm())
 const buttonOptions = document.querySelector('.buttons')
+
 const deleteUserButton = document.getElementById('delete-user-button')
 deleteUserButton.addEventListener('click', () => deleteUser())
+
+const resultsPage = document.querySelector('div.user-results')
+const resultsList = document.getElementById('ranking')
 
 let currentSlide
 let interval
 let currentUser
-
+let userTestResults
 
 async function createUser(e) {
     e.preventDefault()
@@ -123,6 +127,8 @@ const generateQuiz = (list) => {
     createUserDiv.style.display = 'none'
     loginUserDiv.style.display = 'none'
     quizContainer.style.display = 'block'
+    resultsList.style.display = 'none'
+    resultsPage.style.display = 'none'
     buttonOptions.innerHTML = ''
 
     // setting timer
@@ -135,7 +141,7 @@ const generateQuiz = (list) => {
         count--;
         if (count === 0){
             clearInterval(interval)
-            showResults(correctAnswers)
+            showResults(correctAnswers, list.id)
         }
     }, 1000)
 
@@ -190,7 +196,7 @@ const generateQuiz = (list) => {
     submitButton.id = 'submit'
     submitButton.addEventListener('click', () => {
         clearInterval(interval)
-        showResults(correctAnswers)
+        showResults(correctAnswers, list.id)
     })
 
     buttonOptions.append(previousButton, nextButton, submitButton)
@@ -204,13 +210,14 @@ const generateAnswerChoice = (answer, id) => {
     input.type = 'radio'
     input.value = answer
     input.name = `question-${id}`
-    label.textContent = answer
+    label.innerHTML = answer
     label.prepend(input)
     return label
 }
 
-const showResults = (correctAnswers) => {
+const showResults = (correctAnswers, listId) => {
     buttonOptions.innerHTML = ''
+    quizContainer.style.display = 'none'
     let answersCorrectCount = 0
     for (let i = 0; i < correctAnswers.length; i++) {
         if (document.querySelector(`input[name='question-${i+1}']:checked`)) {
@@ -220,7 +227,7 @@ const showResults = (correctAnswers) => {
             }
         }
     }
-    quizContent.textContent = `You got ${answersCorrectCount} out of ${correctAnswers.length} correct!`
+    postScore(answersCorrectCount, listId)
 }
 
 function showSlide(n) {
@@ -249,6 +256,8 @@ function showSlide(n) {
 
 const buildListForm = () => {
     buttonOptions.innerHTML = ''
+    resultsList.style.display = 'none'
+    resultsPage.style.display = 'none'
     frontPage.style.display = 'none'
     quizContainer.style.display = 'none'
     questionsForm.style.display = 'none'
@@ -343,3 +352,67 @@ const nextSlide = () => {
 const previousSlide = () => {
     showSlide(currentSlide - 1);
   }
+
+async function postScore(score, listId){
+    let verb
+    let data = {
+        score: score,
+        user_id: currentUser.id,
+        list_id: listId
+    }
+
+    userOnList(listId, currentUser.id)
+
+    if (userTestResults) {
+        verb = 'PATCH'
+    } else {
+        verb = 'POST'
+    }
+
+    let response = await fetch('http://localhost:3000/scores', {
+        method: verb,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    let json = await response.json()
+    displayResults(json)
+}
+
+const displayResults = (score) => {
+    resultsList.style.display = 'block'
+    resultsList.innerHTML = ''
+
+    fetchListScores(score)
+
+    resultsPage.style.display = 'block'
+    resultsPage.innerHTML = `
+    <h2>You got ${score.score} questions correct!</h2>
+    `
+    resultsPage.textContent = `You got ${score.score} questions correct!`
+}
+
+async function fetchListScores(score) {
+    let response = await fetch(`http://localhost:3000/scores?list_id=${score.list_id}`)
+    let json = await response.json()
+    json.sort((a,b) => b.score - a.score)
+    json.forEach(score => buildAllScores(score))
+}
+
+const buildAllScores = (score) => {
+    resultsList.style.display = 'block'
+    let li = document.createElement('li')
+    li.textContent = `${score.user_name}: ${score.score}`
+    resultsList.appendChild(li)
+}
+
+const userOnList = (listId, userId) => {
+    fetch(`http://localhost:3000/scores?user_id=${userId}&list_id=${listId}`)
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        userTestResults = json
+    })
+}
