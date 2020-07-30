@@ -339,7 +339,6 @@ const buildQuestionsForm = (newList) => {
 
 async function postQuestions(e, newList) {
     e.preventDefault()
-    // debugger
     for (i = 1; i < 11; i++) {
         let q = document.getElementById(`q${i}`).value
         let correct = document.getElementById(`correct${i}`).value
@@ -366,7 +365,6 @@ async function postQuestions(e, newList) {
     }
     let fetchNewList = await fetch(`http://localhost:3000/lists/${newList.id}`)
     let list = await fetchNewList.json()
-    console.log('Questions done')
     buildNav(list)
     questionsForm.reset()
     questionsForm.style.display = 'none'
@@ -428,7 +426,6 @@ const displayResults = (score) => {
     `
     resultsList.innerHTML = "<ol id='ranking'></ol>"
     const resultsOrderedList = document.getElementById('ranking')
-    // resultsPage.textContent = `You got ${score.score} questions correct!`
 }
 
 async function fetchListScores(score) {
@@ -467,7 +464,6 @@ const userOnList = (listId, userId) => {
     fetch(`http://localhost:3000/scores?user_id=${userId}&list_id=${listId}`)
     .then(response => response.json())
     .then(json => {
-        console.log(json)
         userTestResults = json
     })
 }
