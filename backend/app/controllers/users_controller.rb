@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+    def index
+        byebug
+        @user = User.find_by(name: params[:name])
+        # @users = User.all
+        render json: @user
+    end
+
     def show
         @user = User.find(params[:id])
         render json: @user

@@ -1,6 +1,14 @@
 class ScoresController < ApplicationController
     def index
-        @scores = Score.all
+        if params[:list_id] && params[:user_id]
+            @scores = Score.find_by(user_id: params[:user_id], list_id: params[:list_id])
+        elsif params[:list_id]
+            @scores = Score.all.find_all { |score| score.list_id == params[:list_id].to_i }
+        elsif params[:user_id]
+            @scores = Score.find_by(user_id: params[:user_id])
+        else
+            @scores = Score.all
+        end
         render json: @scores
     end
 
@@ -10,7 +18,8 @@ class ScoresController < ApplicationController
     end
 
     def create
-        byebug
+        @score = Score.create(score: params[:score], user_id: params[:user_id], list_id: params[:list_id])
+        render json: @score
     end
 
     def update
