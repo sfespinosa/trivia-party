@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css"> 
     <title>Document</title>
 </head>
 <body>
 <!-- Side navigation -->
     <div class="sidenav" style='display: none'>
-      <button id="create-quiz-button" style='display: none'>Create New Quiz</button>
-      <button id="view-profile-button" style='display: none'>View Your Profile</button>
+      <button id="create-quiz-button" style='display: none' class="primary_btn" >Create New Quiz</button>
+      <button id="view-profile-button" style='display: none' class="primary_btn" >View Your Profile</button>
       <span>Quizzes:</span>
     </div>
   
@@ -18,17 +19,17 @@
   <div class="main">
 
     <div class="welcome-page">
-      <h1>Welcome to Trivia Party!</h1>
-      <button id="create-user-button">Create User</button>
-      <button id="login-user-button">Login</button>
+      <h1>Welcome to Trivia Party!</h1><br>
+      <button class="primary_btn" id="create-user-button">Create User</button><br><br>
+      <button class="primary_btn" id="login-user-button">Login</button>
     </div>
 
-    <div class="create-utttser" style='display: none'>
+    <div class="create-user" style='display: none'>
       <h1>Create an Account!</h1>
       <form id='create-user'>
         <label for="name">Name:</label><br>
         <input type="text" name="name"><br><br>
-        <button type="submit">Create</button>
+        <button type="submit" class="primary_btn" >Create</button>
       </form>
     </div>
 
@@ -37,12 +38,12 @@
       <form id='login'>
         <label for="name">Name:</label><br>
         <input type="text" name="name"><br><br>
-        <button type="submit">Login</button>
+        <button type="submit" class="primary_btn" >Login</button>
       </form>
     </div>
 
     <div class='front-page' style='display: none'>Welcome!<br><br>Your quiz scores:<br><br>
-      <button id="delete-user-button">Delete Your Account</button>
+      <button id="delete-user-button" class="primary_btn" >Delete Your Account</button>
 
     </div>
 
