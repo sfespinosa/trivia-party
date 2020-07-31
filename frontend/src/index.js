@@ -39,6 +39,7 @@ profileButton.addEventListener('click', () => {
     resultsList.style.display = 'block'
     frontPage.style.display = 'block'
     resultsPage.style.display = 'none'
+    startPage.style.display = 'none'
     fetchUserScores(currentUser)
 
 })
@@ -50,6 +51,7 @@ const createQuizButton = document.getElementById('create-quiz-button')
 const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
 createQuizButton.addEventListener('click', () => {
+    startPage.style.display = 'none'
     clearInterval(interval)
     buildListForm()})
 const buttonOptions = document.querySelector('.buttons')
@@ -58,6 +60,7 @@ const deleteUserButton = document.getElementById('delete-user-button')
 deleteUserButton.addEventListener('click', () => deleteUser())
 const resultsPage = document.querySelector('div.user-results')
 const resultsList = document.querySelector('div.list-results')
+const startPage = document.querySelector('div.start-page')
 
 async function createUser(e) {
     e.preventDefault()
@@ -132,7 +135,7 @@ const buildNav = (list) => {
     let span = document.createElement('span')
     span.textContent = list.title
     sidenav.appendChild(span)
-    span.addEventListener('click', () => generateQuiz(list))
+    span.addEventListener('click', () => generateStartPage(list))
 
 }
 
@@ -146,6 +149,7 @@ const generateQuiz = (list) => {
     quizContainer.style.display = 'block'
     resultsList.style.display = 'none'
     resultsPage.style.display = 'none'
+    startPage.style.display = 'none'
     buttonOptions.style.display = 'block'
     buttonOptions.innerHTML = ''
 
@@ -469,4 +473,27 @@ const userOnList = (listId, userId) => {
     .then(json => {
         userTestResults = json
     })
+}
+
+const generateStartPage = (list) => {
+    clearInterval(interval)
+    frontPage.style.display = 'none'
+    quizForm.style.display = 'none'
+    questionsForm.style.display = 'none'
+    createUserDiv.style.display = 'none'
+    loginUserDiv.style.display = 'none'
+    quizContainer.style.display = 'none'
+    resultsList.style.display = 'none'
+    resultsPage.style.display = 'none'
+    buttonOptions.style.display = 'none'
+    startPage.style.display = 'block'
+    startPage.innerHTML = `
+    <h1>Ready to take the '${list.title}' quiz?</h1> 
+    <h3>90 seconds to answer 10 questions.</h3>`
+
+    let startButton = document.createElement('button')
+    startButton.textContent = 'Start Quiz'
+    startButton.className = 'primary_btn'
+    startButton.addEventListener('click', () => generateQuiz(list))
+    startPage.appendChild(startButton)
 }

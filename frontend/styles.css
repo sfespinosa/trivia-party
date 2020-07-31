@@ -64,7 +64,9 @@ h4,
 h5,
 h6 {
   font-family: "Rajdhani", sans-serif;
-  font-weight: 600; }
+  font-weight: 600;
+  margin: 10px;
+ }
 
 .primary_btn {
   display: inline-block;
