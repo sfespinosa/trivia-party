@@ -219,7 +219,7 @@ h6 {
 .buttons{
   position: absolute;
   left: 0px;
-  top: 270px;
+  top: 300px;
   width: 100%;
   z-index: 1;
 }

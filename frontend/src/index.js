@@ -32,6 +32,7 @@ const frontPage = document.querySelector('div.front-page')
 const sidenav = document.querySelector('.sidenav')
 let profileButton = document.getElementById('view-profile-button')
 profileButton.addEventListener('click', () => {
+    clearInterval(interval)
     quizContainer.style.display = 'none'
     quizForm.style.display = 'none'
     buttonOptions.style.display = 'none'
@@ -48,7 +49,9 @@ const quizContainer = document.querySelector('.quiz-container')
 const createQuizButton = document.getElementById('create-quiz-button')
 const quizForm = document.getElementById('quiz-form')
 const questionsForm = document.getElementById('questions-form')
-createQuizButton.addEventListener('click', () => buildListForm())
+createQuizButton.addEventListener('click', () => {
+    clearInterval(interval)
+    buildListForm()})
 const buttonOptions = document.querySelector('.buttons')
 const userProgressBar = document.getElementById('user-progress-bar')
 const deleteUserButton = document.getElementById('delete-user-button')
