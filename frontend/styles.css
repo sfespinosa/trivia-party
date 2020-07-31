@@ -1,7 +1,5 @@
 /* The sidebar menu */
-@import url("https://fonts.googleapis.com/css?family=Neucha|Cabin+Sketch&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Rajdhani");
-
 
 .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
@@ -12,31 +10,45 @@
     left: 0;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
-
-    background: transparent;
-    background:  #231a60;
-
+    padding-bottom: 20px;
+    background:  #3b328b;
 }
 
 /* The navigation menu links */
 .sidenav span {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
+  font-size: 18px;
+  font-family: "Rajdhani", sans-serif;
+  color: white;
   display: block;
+}
+
+#create-quiz-button {
+  position: absolute;
+  margin-left: 27px;
+  bottom: 100px;
+}
+
+#view-profile-button {
+  position: absolute;
+  margin-left: 22px;
+  bottom: 30px;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav span:hover {
-  color: #f1f1f1;
+  color: #a4ffb0;
+  font-weight: bold;
+  text-shadow: 0 10px 20px 0 rgba(45, 148, 117, 0.2);
 }
-
 
 /* Style page content */
 .main {
   margin-left: 200px; /* Same as the width of the sidebar */
-  padding: 0px 10px;
+  padding: 10px 10px;
+  font-family: "Rajdhani", sans-serif;
+  background:  white;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -50,13 +62,6 @@
   } 
 }
 
-/* Changes */
-body {
-  font-family: "Rajdhani", sans-serif;
-  background: transparent;
-  background:  #F0F8FF;
-}
-
 h1,
 h2,
 h3,
@@ -64,7 +69,9 @@ h4,
 h5,
 h6 {
   font-family: "Rajdhani", sans-serif;
-  font-weight: 600; }
+  font-weight: 600;
+  margin: 10px;
+ }
 
 .primary_btn {
   display: inline-block;
@@ -98,7 +105,40 @@ h6 {
   color: #22195e; 
 }
 
-.welcome-page {
+.gradient_btn {
+  padding: 1px 1px 1px 1px;
+  display: inline-block;
+  color: #fff;
+  letter-spacing: 2px;
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 46px;
+  outline: none !important;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: double 2px transparent;
+  border-radius: 5px;
+  background-image: linear-gradient(#342b7e, #3b328b), radial-gradient(circle at top left, #3fcaff, #a4ffb0);
+  background-image: -webkit-linear-gradient(#342b7e, #3b328b), -webkit-radial-gradient(circle at top left, #3fcaff, #a4ffb0);
+  background-image: -moz-linear-gradient(#342b7e, #3b328b), -moz-radial-gradient(circle at top left, #3fcaff, #a4ffb0);
+  background-image: -ms-linear-gradient(#342b7e, #3b328b), -ms-radial-gradient(circle at top left, #3fcaff, #a4ffb0);
+  background-image: -o-linear-gradient(#342b7e, #3b328b), -o-radial-gradient(circle at top left, #3fcaff, #a4ffb0);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+.gradient_btn:hover {
+  color: #22195e;
+  box-shadow: 0px 10px 30px rgba(130, 82, 250, 0.2);
+  border-radius: 5px;
+  background: -webkit-linear-gradient(to right, #3fcaff 0%, #a4ffb0 100%);
+  background: -moz-linear-gradient(to right, #3fcaff 0%, #a4ffb0 100%);
+  background: -o-linear-gradient(to right, #3fcaff 0%, #a4ffb0 100%);
+  background: linear-gradient(to right, #3fcaff 0%, #a4ffb0 100%); 
+} 
+
+.gif-background {
   position: fixed;
   top:0px;
   right:0px;
@@ -112,38 +152,22 @@ h6 {
   background-size: cover; 
 }
 
-.login {
-  position: fixed;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
-  text-align: center;
-  padding-top: 100px;
-  background: white;
-}
-
-.create-user {
-  position: fixed;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
-  text-align: center;
-  padding-top: 100px;
-  background: white;
-}
-
-.front-page {
-  position: relative;
-}
-
 #quiz-form {
   position: absolute;
   box-sizing: border-box;
   width: 50%;
   padding: 10px;
+}
 
+.front-page {
+  text-align: center;
+}
+
+#delete-user-button {
+  position: absolute;
+  bottom: 30px;
+  left: 52%;
+  margin-left: -50px;
 }
 
 /* Float four columns side by side */
@@ -172,11 +196,9 @@ h6 {
 }
 .card:hover {
   box-shadow: 0 10px 20px 0 rgba(50, 30, 97, 0.2); /* this adds the "card" effect */
-
 }
 
 /* generate quiz */
-
 .slide{
   position: absolute;
   left: 0px;
@@ -184,7 +206,7 @@ h6 {
   width: 100%;
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 
 .active-slide{
@@ -215,6 +237,9 @@ h6 {
   display: block;
   margin-bottom: 10px;
 }
+.answers label:hover {
+  box-shadow: 5px 5px 10px 5px rgba(50, 30, 97, 0.2);
+}
 
 .buttons{
   position: absolute;
@@ -226,7 +251,7 @@ h6 {
 
 #main-progress-bar {
   width: 100%;
-  background-color: #696969;
+  background-color: #929292;
   margin-bottom: 5px;
 }
 
@@ -239,25 +264,49 @@ h6 {
 }
 
 .user-results {
-  position: fixed;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+  position: relative;
+  top:50px;
+  margin: 0 auto;
   text-align: center;
-  margin-top: 100px;
 }
 
 .list-results {
-  position: fixed;
+  position: relative;
   top:50px;
-  right:0px;
-  bottom:0px;
-  left:0px;
+  margin: 0 auto;
   text-align: center;
-  margin-top: 100px;
 }
 
 ol#ranking li {
   font-size: 20px;
+}
+
+.row-score {
+  position: relative;
+  display: block;
+  width: 600px;
+  height: 40px;
+  margin: 0 auto;
+  border-bottom: 1px solid #AFAFAF;
+}
+
+.user-row-score {
+  position: relative;
+  display: block;
+  width: 600px;
+  height: 40px;
+  margin: 0 auto;
+  border-bottom: 1px solid #5804b9;
+}
+
+.row-score:nth-child(1) {
+  background: gold;
+}
+
+.row-score:nth-child(2) {
+  background: #c0c0c0;
+}
+
+.row-score:nth-child(3) {
+  background: #cd7f32;
 }

@@ -5,46 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css"> 
-    <title>Trivia Party</title>
+    <title>Trivia Party!</title>
 </head>
 <body>
 <!-- Side navigation -->
     <div class="sidenav" style='display: none'>
-      <button id="create-quiz-button" style='display: none' class="primary_btn" >Create New Quiz</button>
-      <button id="view-profile-button" style='display: none' class="primary_btn" >View Your Profile</button>
+      <span>Take a quiz:</span>
+      <button id="view-profile-button" style='display: none' class="gradient_btn" >View Your Profile</button><br>
+      <button id="create-quiz-button" style='display: none' class="gradient_btn" >Create New Quiz</button><br>
     </div>
   
+    <div class="gif-background">
+      <div class="welcome-page">
+        <h1>Welcome to Trivia Party!</h1><br>
+        <button class="primary_btn" id="create-user-button">Create User</button><br><br>
+        <button class="primary_btn" id="login-user-button">Login</button>
+      </div>
+      <div class="create-user" style='display: none'>
+        <h1>Create an Account!</h1>
+        <form id='create-user'>
+          <label for="name">Name:</label><br>
+          <input type="text" name="name"><br><br>
+          <button type="submit" class="primary_btn" >Create</button>
+        </form>
+      </div>
+      <div class="login" style='display: none'>
+        <h1>Login!</h1>
+        <form id='login'>
+          <label for="name">Name:</label><br>
+          <input type="text" name="name"><br><br>
+          <button type="submit" class="primary_btn" >Login</button>
+        </form>
+      </div>
+    </div>
+
   <!-- Page content -->
   <div class="main">
-
-    <div class="welcome-page">
-      <h1>Welcome to Trivia Party!</h1><br>
-      <button class="primary_btn" id="create-user-button">Create User</button><br><br>
-      <button class="primary_btn" id="login-user-button">Login</button>
-    </div>
-
-    <div class="create-user" style='display: none'>
-      <h1>Create an Account!</h1>
-      <form id='create-user'>
-        <label for="name">Name:</label><br>
-        <input type="text" name="name"><br><br>
-        <button type="submit" class="primary_btn" >Create</button>
-      </form>
-    </div>
-
-    <div class="login" style='display: none'>
-      <h1>Login!</h1>
-      <form id='login'>
-        <label for="name">Name:</label><br>
-        <input type="text" name="name"><br><br>
-        <button type="submit" class="primary_btn" >Login</button>
-      </form>
-    </div>
 
     <div class='front-page' style='display: none'>
       <h1>Welcome!</h1><br><br>
       <button id="delete-user-button" class="primary_btn" >Delete Your Account</button>
+    </div>
 
+    <div class='start-page' style='display: none'>
+      <h1 style='text-align: center'>Ready for your quiz?</h1> 
+      <h3 style='text-align: center'>90 seconds to answer 10 questions</h3>
     </div>
 
     <div class="quiz-container" style='display: none'>
@@ -52,19 +57,13 @@
         <div id="user-progress-bar"></div>
       </div>
         <div id="quiz">
-
-        
         </div>
         <div class='buttons'></div>
-
     </div>
  
     <div class='user-results' style='display: none'></div>
     <div class='list-results' style='display: none'></div>
  
-    
-
-  
     <form id="quiz-form" class="form-group" style='display: none'> 
       <h1>Create a new quiz!</h1>
       <label for="title">Trivia Quiz Name:</label><br>
@@ -95,9 +94,7 @@
       <button id="continue" class="primary_btn" type="submit">Continue</button>
     </form>
 
-    <form id="questions-form" class="question-cards">
-
-    </form>
+    <form id="questions-form" class="question-cards"></form>
 
   </div>
   </div>

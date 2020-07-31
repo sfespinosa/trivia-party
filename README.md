@@ -6,7 +6,7 @@
 3. Enter the command "bundle install" in the terminal.
 4. Navigate to backend folder (cd backend) and run "rails db:create" in the terminal.
 5. Run "rails db:migrate" in the terminal.
-6. Run "rails db:seed" in the terminal for testing data.
+6. For testing data, in the backend/db/seeds.rb file, alter the api url with different category numbers and run "rails db:seed" in the terminal.
 7. Run "rails server" to begin server.
 8. Run "open frontend/index.html" to view the website!
 
