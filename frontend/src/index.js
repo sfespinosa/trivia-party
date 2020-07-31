@@ -8,25 +8,21 @@ const welcomePageDiv = document.querySelector('.welcome-page')
 const createUserDiv = document.querySelector('.create-user')
 const loginUserDiv = document.querySelector('.login')
 const createUserButton = document.getElementById('create-user-button')
+const gifBackground = document.querySelector('.gif-background')
 createUserButton.addEventListener('click', () => {
     welcomePageDiv.style.display = 'none'
     createUserDiv.style.display = 'block'
-    sidenav.style.display = 'block'
-    quizContainer.style.display = 'none'
 })
 const loginUserButton = document.getElementById('login-user-button')
 loginUserButton.addEventListener('click', () => {
     welcomePageDiv.style.display = 'none'
     loginUserDiv.style.display = 'block'
-    sidenav.style.display = 'block'
-    quizContainer.style.display = 'none'
 })
 const createUserForm = document.getElementById('create-user')
 createUserForm.addEventListener('submit', (e) => createUser(e))
 const loginForm = document.getElementById('login')
 loginForm.addEventListener('submit', (e) => loginUser(e))
 const frontPage = document.querySelector('div.front-page')
-
 
 // Side nav
 const sidenav = document.querySelector('.sidenav')
@@ -76,8 +72,7 @@ async function createUser(e) {
         alert(json['error'])
     } else {
         currentUser = json
-        loginUserDiv.style.display = 'none'
-        createUserDiv.style.display = 'none'
+        gifBackground.style.display = 'none'
         frontPage.style.display = 'block'
         createQuizButton.style.display = 'block'
         profileButton.style.display = 'block'
@@ -94,8 +89,7 @@ async function loginUser(e) {
         alert(json['error'])
     } else {
         currentUser = json
-        loginUserDiv.style.display = 'none'
-        createUserDiv.style.display = 'none'
+        gifBackground.style.display = 'none'
         frontPage.style.display = 'block'
         createQuizButton.style.display = 'block'
         profileButton.style.display = 'block'
@@ -108,6 +102,7 @@ async function loginUser(e) {
 async function deleteUser() {
     let response = await fetch(`http://localhost:3000/users/${currentUser.id}`, {method: 'DELETE'})
     let json = await response.json()
+    gifBackground.style.display = 'block'
     welcomePageDiv.style.display = 'block'
     createUserDiv.style.display = 'none'
     loginUserDiv.style.display = 'none'
@@ -141,8 +136,6 @@ const generateQuiz = (list) => {
     frontPage.style.display = 'none'
     quizForm.style.display = 'none'
     questionsForm.style.display = 'none'
-    createUserDiv.style.display = 'none'
-    loginUserDiv.style.display = 'none'
     quizContainer.style.display = 'block'
     resultsList.style.display = 'none'
     resultsPage.style.display = 'none'
@@ -261,15 +254,13 @@ function showSlide(n) {
     currentSlide = n;
     if(currentSlide === 0){
       previousButton.style.display = 'none';
-    }
-    else{
+    } else {
       previousButton.style.display = 'inline-block';
     }
     if(currentSlide === slides.length-1){
       nextButton.style.display = 'none';
       submitButton.style.display = 'inline-block';
-    }
-    else{
+    } else {
       nextButton.style.display = 'inline-block';
       submitButton.style.display = 'none';
     }
@@ -375,19 +366,20 @@ async function postQuestions(e, newList) {
     quizForm.style.display = 'none'
     buttonOptions.style.display = 'none'
     frontPage.style.display = 'block'
+    resultsList.style.display = 'block'
 }
 
 const nextSlide = () => {
     showSlide(currentSlide + 1);
     let width = userProgressBar.style.width.replace(/\W/,"")
     userProgressBar.style.width = (parseInt(width, 10) + 10).toString() + '%'
-  }
+}
   
 const previousSlide = () => {
     showSlide(currentSlide - 1);
     let width = userProgressBar.style.width.replace(/\W/,"")
     userProgressBar.style.width = (parseInt(width, 10) - 10).toString() + '%'
-  }
+}
 
 async function postScore(score, listId){
     let verb
@@ -418,14 +410,12 @@ async function postScore(score, listId){
 }
 
 const displayResults = (score) => {
-    
-
     fetchListScores(score)
-
     resultsPage.style.display = 'block'
     resultsList.style.display = 'block'
     resultsPage.innerHTML = `
-    <h1>You got ${score.score} questions correct!</h1>
+    <h1>You got ${score.score} questions correct!</h1><br><br>
+    <h2>Scoreboard:</h2>
     `
     resultsList.innerHTML = "<ol id='ranking'></ol>"
     const resultsOrderedList = document.getElementById('ranking')
@@ -442,7 +432,8 @@ const buildAllScores = (score) => {
     const resultsOrderedList = document.getElementById('ranking')
     resultsOrderedList.style.display = 'block'
     let li = document.createElement('li')
-    li.textContent = `${score.user_name}: ${score.score}`
+    li.className = 'row-score'
+    li.textContent = `${score.user_name}: ${score.score} points`
     resultsOrderedList.appendChild(li)
 }
 
@@ -458,7 +449,7 @@ async function fetchUserScores(currentUser) {
 const buildUserScores = (score) => {
     resultsList.style.display = 'block'
     let li = document.createElement('li')
-    li.textContent = `${score.list_title}: ${score.score}`
+    li.textContent = `${score.list_title}: ${score.score} points`
     resultsList.appendChild(li)
 }
 
@@ -466,7 +457,5 @@ const buildUserScores = (score) => {
 const userOnList = (listId, userId) => {
     fetch(`http://localhost:3000/scores?user_id=${userId}&list_id=${listId}`)
     .then(response => response.json())
-    .then(json => {
-        userTestResults = json
-    })
+    .then(json => {userTestResults = json})
 }
