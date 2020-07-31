@@ -15,7 +15,7 @@ require 'httparty'
 
 
 
-api_url = 'https://opentdb.com/api.php?amount=10&category=14&difficulty=easy&type=multiple'
+api_url = 'https://opentdb.com/api.php?amount=10&category=11&difficulty=easy&type=multiple'
 response = HTTParty.get(api_url)
 questions = response.parsed_response
 
@@ -25,7 +25,7 @@ questions = response.parsed_response
 # list3 = List.create(title: "Celebrities", category: "Celebrities") # cat 26
 # list4 = List.create(title: "GK: What do you know?", category: "General Knowledge") # cat 9
 # list5 = List.create(title: "Music: Beyonce Knows", category: "Music") # cat 12
-list6 = List.create(title: "TV: What do you know?", category: "TV") # cat 14
+# list6 = List.create(title: "TV: What do you know?", category: "TV") # cat 14
 # list7 = List.create(title: "Film: Quizpicable Me", category: "Film") # cat 11
 
 
@@ -37,6 +37,6 @@ questions["results"].each do |question|
         difficulty: question["difficulty"],
         correct_answer: question["correct_answer"],
         incorrect_answers: question["incorrect_answers"],
-        list: list6
+        list: list7
     )
 end

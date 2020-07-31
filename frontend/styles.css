@@ -24,6 +24,18 @@
   display: block;
 }
 
+#create-quiz-button {
+  position: absolute;
+  margin-left: 27px;
+  bottom: 100px;
+}
+
+#view-profile-button {
+  position: absolute;
+  margin-left: 22px;
+  bottom: 30px;
+}
+
 /* When you mouse over the navigation links, change their color */
 .sidenav span:hover {
   color: #a4ffb0;
@@ -92,10 +104,10 @@ h6 {
 }
 
 .gradient_btn {
-  padding: 2px 2px 2px 2px;
+  padding: 1px 1px 1px 1px;
   display: inline-block;
   color: #fff;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   font-family: "Roboto", sans-serif;
   font-size: 11px;
   font-weight: 500;
@@ -274,6 +286,15 @@ ol#ranking li {
   height: 40px;
   margin: 0 auto;
   border-bottom: 1px solid #AFAFAF;
+}
+
+.user-row-score {
+  position: relative;
+  display: block;
+  width: 600px;
+  height: 40px;
+  margin: 0 auto;
+  border-bottom: 1px solid #5804b9;
 }
 
 .row-score:nth-child(1) {

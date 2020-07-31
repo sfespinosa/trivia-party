@@ -441,7 +441,7 @@ async function fetchUserScores(currentUser) {
     let response = await fetch(`http://localhost:3000/scores?user_id=${currentUser.id}`)
     let json = await response.json()
     resultsList.innerHTML = ''
-    resultsList.innerHTML = '<h3>Your quiz scores:</h3>'
+    resultsList.innerHTML = '<h3>Your quiz scores:</h3><br>'
     json.sort((a,b) => b.score - a.score)
     json.forEach(score => buildUserScores(score))
 }
@@ -449,6 +449,7 @@ async function fetchUserScores(currentUser) {
 const buildUserScores = (score) => {
     resultsList.style.display = 'block'
     let li = document.createElement('li')
+    li.className = 'user-row-score'
     li.textContent = `${score.list_title}: ${score.score} points`
     resultsList.appendChild(li)
 }
